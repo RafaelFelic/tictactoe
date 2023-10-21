@@ -69,31 +69,21 @@ function resetBoard() {
 }
 
 function computerPlay() {
-  if (Math.random() < 0.1) {
-    const possibleMoves = board
-      .map((v, i) => (v === '' ? i : -1))
-      .filter((i) => i !== -1);
-    const randomMove =
-      possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-    board[randomMove] = 'O';
-    cells[randomMove].innerHTML = 'O';
-  } else {
-    let bestScore = -Infinity;
-    let move;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i] === '') {
-        board[i] = 'O';
-        let score = minimax(board, 0, false);
-        board[i] = '';
-        if (score > bestScore) {
-          bestScore = score;
-          move = i;
-        }
+  let bestScore = -Infinity;
+  let move;
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === '') {
+      board[i] = 'O';
+      let score = minimax(board, 0, false);
+      board[i] = '';
+      if (score > bestScore) {
+        bestScore = score;
+        move = i;
       }
     }
-    board[move] = 'O';
-    cells[move].innerHTML = 'O';
   }
+  board[move] = 'O';
+  cells[move].innerHTML = 'O';
 
   if (checkWin('O')) {
     announceWinner('O', checkWin('O'));
